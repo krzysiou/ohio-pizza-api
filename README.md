@@ -6,6 +6,6 @@ After cloning the repo run `npm i`. Create `.env` file and set `PORT=3001`. To r
 
 ### Commands:
 
-`npm run build` - builds the project into `./build` directory
-`npm run dev` - starts the server in developer mode
-`npm run prod` - starts the server in production mode
+- `npm run build` - builds the project into `./build` directory
+- `npm run dev` - starts the server in developer mode
+- `npm run prod` - starts the server in production mode
