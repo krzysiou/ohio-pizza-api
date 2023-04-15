@@ -1,4 +1,4 @@
-# ohio-pizza
+# ohio-pizza-api
 
 ### Setup
 
