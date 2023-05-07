@@ -1,6 +1,12 @@
 import { Request, Response } from 'express';
 
-const pizzaJSON = [
+type Pizza = {
+  name: string;
+  ingredients: string[];
+  price: number;
+};
+
+const pizzaJSON: Pizza[] = [
   {
     name: 'Margherita',
     ingredients: ['tomato sauce', 'mozzarella cheese', 'fresh basil'],
@@ -25,7 +31,7 @@ const pizzaJSON = [
   },
 ];
 
-const getPizzas = (req: Request, res: Response) => {
+const getPizzas = (_req: Request, res: Response<Pizza[]>) => {
   // TODO: get data from database then remove mock json data
   return res.json(pizzaJSON).status(200).send();
 };
