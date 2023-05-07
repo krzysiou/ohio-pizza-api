@@ -8,6 +8,11 @@ const bindings: Binding[] = [
     callback: helloWorld,
     middleware: helloWorldMiddleware,
   },
+  {
+    method: 'GET',
+    path: '/pizza',
+    callback: getPizzas,
+  },
 ];
 
 export { bindings };
