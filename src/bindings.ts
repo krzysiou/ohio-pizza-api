@@ -1,4 +1,4 @@
-import { helloWorld, helloWorldMiddleware } from './core/hello-world';
+import { helloWorld, helloWorldMiddleware, getPizzas } from './core/';
 import { Binding } from './types';
 
 const bindings: Binding[] = [
