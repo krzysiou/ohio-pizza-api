@@ -1,4 +1,4 @@
-import { helloWorld, helloWorldMiddleware } from './core/hello-world';
+import { helloWorld, helloWorldMiddleware, getPizzas } from './core/';
 import { Binding } from './types';
 
 const bindings: Binding[] = [
@@ -7,6 +7,11 @@ const bindings: Binding[] = [
     path: '/',
     callback: helloWorld,
     middleware: helloWorldMiddleware,
+  },
+  {
+    method: 'GET',
+    path: '/pizza',
+    callback: getPizzas,
   },
 ];
 
