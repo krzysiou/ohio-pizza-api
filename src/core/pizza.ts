@@ -29,7 +29,7 @@ const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
         name,
         ingredients,
         pic_url,
-        price: price || 9.99,
+        price: price || 9.99, // TODO: remove after add price in the db
       };
     })
   );
