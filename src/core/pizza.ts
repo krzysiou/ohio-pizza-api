@@ -10,10 +10,31 @@ type Pizza = {
 };
 
 const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
-  // TODO: get data from database then remove mock json data
-  // const pgRes = await PostgresClient.query<Pizza[]>('SELECT * FROM pizza');
+  const pizzas = await PostgresClient.query<Omit<Pizza, 'ingredients'>>(
+    'select * from get_pizza()'
+  );
 
-  return res.json(pizzaJSON).status(200).send();
+  const pizzasWithIngredients = await Promise.all(
+    pizzas.rows.map(async ({ pizza_id, pic_url, name, price }) => {
+      const res = await PostgresClient.query<{
+        pizza_name: string;
+        ingredient_name: string;
+      }>('select * from get_pizza_with_ingredients_table($1)', [pizza_id]);
+
+      const ingredients = res.rows.map(
+        ({ ingredient_name }) => ingredient_name
+      );
+      return {
+        pizza_id,
+        name,
+        ingredients,
+        pic_url,
+        price: price || 9.99,
+      };
+    })
+  );
+
+  return res.json(pizzasWithIngredients).status(200);
 };
 
 export { getPizzas };
