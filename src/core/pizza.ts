@@ -2,42 +2,34 @@ import { Request, Response } from 'express';
 import { PostgresClient } from '../db';
 
 type Pizza = {
+  pizza_id: number;
   name: string;
   ingredients: string[];
   price: number;
-  imageUrl?: string;
+  pic_url?: string;
 };
 
-const pizzaJSON: Pizza[] = [
-  {
-    name: 'Margherita',
-    ingredients: ['tomato sauce', 'mozzarella cheese', 'fresh basil'],
-    price: 9.99,
-  },
-  {
-    name: 'Pepperoni',
-    ingredients: ['tomato sauce', 'mozzarella cheese', 'pepperoni'],
-    price: 11.99,
-  },
-  {
-    name: 'Vegetarian',
-    ingredients: [
-      'tomato sauce',
-      'mozzarella cheese',
-      'mushrooms',
-      'green peppers',
-      'red onions',
-      'black olives',
-    ],
-    price: 10.99,
-  },
-];
-
 const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
-  // TODO: get data from database then remove mock json data
-  // const pgRes = await PostgresClient.query<Pizza[]>('SELECT * FROM pizza');
+  const [pizzasInfo, pizzasIngredients] = await Promise.all([
+    PostgresClient.query<Omit<Pizza, 'ingredients'>>(
+      'select * from get_pizza()'
+    ),
+    PostgresClient.query<{
+      pizza_name: string;
+      ingredient_name: string;
+    }>('select * from get_all_pizzas()'),
+  ]);
 
-  return res.json(pizzaJSON).status(200).send();
+  const pizzas: Pizza[] = pizzasInfo.rows.map((pizza) => {
+    return {
+      ...pizza,
+      ingredients: pizzasIngredients.rows
+        .filter((p) => p.pizza_name === pizza.name)
+        .map((p) => p.ingredient_name),
+    };
+  });
+
+  return res.json(pizzas).status(200);
 };
 
 export { getPizzas };
