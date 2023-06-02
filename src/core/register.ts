@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { hash } from 'bcrypt';
-import { v4 } from 'uuid';
 import { findUser, saveUser } from '../utils/user-actions';
 import { generateJsonWebToken } from '../utils/jwt-actions';
 
