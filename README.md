@@ -2,7 +2,7 @@
 
 ### Setup
 
-After cloning the repo run `npm i`. Create `.env` file and set `PORT=3001`. To run the project type `npm run dev` or `npm run prod`.
+After cloning the repo run `npm i`, create `.env` file and set `PORT=3001`. To run the project type `npm run dev` or `npm run prod`.
 
 ### Commands:
 
