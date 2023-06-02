@@ -14,7 +14,6 @@ interface Binding {
 }
 
 interface User {
-    id: string;
     username: string;
     password: string;
   }

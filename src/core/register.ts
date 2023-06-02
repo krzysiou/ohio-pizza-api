@@ -25,7 +25,6 @@ const registerEmployee = async (req: Request, res: Response) => {
   const hashedPassword = await hashPassword(password);
 
   const userData = {
-    id: v4(), 
     username, 
     password: hashedPassword
   };
