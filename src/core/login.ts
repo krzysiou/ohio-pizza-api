@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { findUser } from './utils';
 import { compare } from 'bcrypt';
+import { findUser } from '../utils/user-actions';
+import { generateJsonWebToken } from '../utils/jwt-actions';
 
 const validatePassword = async (passedPassword: string, validHashedPassword: string): Promise<boolean> => {
   const passwordMatching = await compare(passedPassword, validHashedPassword);
@@ -24,7 +25,9 @@ const loginEmployee = async (req: Request, res: Response) => {
     return;
   }
 
-  res.status(200).send({ message: 'Looged in' });
+  const accessToken = generateJsonWebToken(user);
+
+  res.status(200).send({ accessToken });
 };
 
 export { loginEmployee };

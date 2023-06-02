@@ -1,7 +1,8 @@
-import { hash } from 'bcrypt';
 import { Request, Response } from 'express';
-import { findUser, registeredUsers } from './utils';
+import { hash } from 'bcrypt';
 import { v4 } from 'uuid';
+import { findUser, saveUser } from '../utils/user-actions';
+import { generateJsonWebToken } from '../utils/jwt-actions';
 
 const hashPassword = async (password: string): Promise<string> => {
   const hashedPassword = await hash(password, 10);
@@ -31,9 +32,11 @@ const registerEmployee = async (req: Request, res: Response) => {
     password: hashedPassword
   };
 
-  registeredUsers.push(userData);
+  saveUser(userData);
 
-  res.status(200).send({ message: 'User registered' });
+  const accessToken = generateJsonWebToken(userData);
+
+  res.status(200).send({ accessToken });
 };
 
 export { registerEmployee };
