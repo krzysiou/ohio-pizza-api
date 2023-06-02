@@ -1,16 +1,15 @@
+import { PostgresClient } from '../db';
 import { User } from '../types';
 
-// TODO TEMPORARY
-const registeredUsers: User[] = [];
-
-const findUser = (username: string) => {
-  // TODO CONNECT TO DB
-  return registeredUsers.find((user) => user.username === username);
+const findUser = async (username: string) => {
+  const result = await PostgresClient.query('select * from get_employee()');
+  return result.rows.find((user) => user.login === username) as User;
 };
 
-const saveUser = (user: User) => {
-  // TODO CONNECT TO DB
-  registeredUsers.push(user);
+const saveUser = async (user: User) => {
+  const {username, password} = user;
+
+  await PostgresClient.query(`select * from insert_employee('${username}', '${password}')`);
 };
 
-export { registeredUsers, findUser, saveUser };
+export { findUser, saveUser };

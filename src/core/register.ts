@@ -13,15 +13,13 @@ const registerEmployee = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   
   if(!username || !password) {
-    res.status(400).send({ message: 'Username or password was not provided' });
-    return;
+    return res.status(400).send({ message: 'Username or password was not provided' });
   }
 
-  const user = findUser(username);
+  const user = await findUser(username);
 
   if(user) {
-    res.status(400).send({ message: 'Username already taken' });
-    return;
+    return res.status(400).send({ message: 'Username already taken' });
   }
 
   const hashedPassword = await hashPassword(password);
@@ -36,7 +34,7 @@ const registerEmployee = async (req: Request, res: Response) => {
 
   const accessToken = generateJsonWebToken(userData);
 
-  res.status(200).send({ accessToken });
+  return res.status(200).send({ accessToken });
 };
 
 export { registerEmployee };
