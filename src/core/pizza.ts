@@ -19,7 +19,7 @@ const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
       ingredient_name: string;
     }>('select * from get_all_pizzas()'),
   ]);
-
+  
   const pizzas: Pizza[] = pizzasInfo.rows.map((pizza) => {
     return {
       ...pizza,
@@ -28,7 +28,7 @@ const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
         .map((p) => p.ingredient_name),
     };
   });
-
+  
   return res.json(pizzas).status(200);
 };
 

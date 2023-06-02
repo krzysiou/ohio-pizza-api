@@ -1,2 +1,3 @@
-export * from './hello-world';
 export * from './pizza';
+export * from './login';
+export * from './register';
