@@ -1,6 +1,13 @@
 import bodyParser from 'body-parser';
 import type { Binding } from './types';
-import { getPizzas, loginEmployee, registerEmployee } from './core/';
+import {
+  addPizza,
+  deletePizza,
+  getPizzas,
+  loginEmployee,
+  registerEmployee,
+} from './core/';
+import { verifyJsonWebToken } from './utils/jwt-actions';
 
 const jsonParser = bodyParser.json();
 
@@ -22,7 +29,18 @@ const bindings: Binding[] = [
     callback: registerEmployee,
     middleware: jsonParser,
   },
+  {
+    method: 'POST',
+    path: '/admin/add-pizza',
+    callback: addPizza,
+    middleware: [jsonParser, verifyJsonWebToken],
+  },
+  {
+    method: 'POST',
+    path: '/admin/delete-pizza',
+    callback: deletePizza,
+    middleware: [jsonParser, verifyJsonWebToken],
+  },
 ];
 
 export { bindings };
-
