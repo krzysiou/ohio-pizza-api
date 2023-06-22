@@ -57,10 +57,9 @@ const bindings: Binding[] = [
     middleware: [jsonParser, verifyJsonWebToken],
   },
   {
-    method: 'POST',
+    method: 'GET',
     path: '/admin/reservation',
     callback: getReservation,
-    middleware: [jsonParser, verifyJsonWebToken],
   },
 ];
 
