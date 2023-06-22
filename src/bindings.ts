@@ -48,7 +48,7 @@ const bindings: Binding[] = [
     method: 'POST',
     path: '/admin/add-reservation',
     callback: addReservation,
-    middleware: [jsonParser, verifyJsonWebToken],
+    middleware: [jsonParser],
   },
   {
     method: 'POST',
