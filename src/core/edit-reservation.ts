@@ -1,6 +1,13 @@
 import { Request, Response } from 'express';
 import { PostgresClient } from '../db';
 
+interface Reservation {
+  reservation_id: number;
+  reservation_date: string;
+  tel: string;
+  surname: string;
+}
+
 const addReservation = async (req: Request, res: Response) => {
   const { date, tel, surname } = req.body;
 
@@ -26,4 +33,12 @@ const deleteReservation = async (req: Request, res: Response) => {
   res.status(200).send({ message: 'Reservation deleted successfully' });
 };
 
-export { addReservation, deleteReservation };
+const getReservation = async (req: Request, res: Response) => {
+  const reservationsInfo = await PostgresClient.query<Reservation>('SELECT * FROM get_reservation()');
+  
+  const reservations: Reservation[] = reservationsInfo.rows;
+  
+  return res.json(reservations).status(200);
+};
+
+export { addReservation, deleteReservation, getReservation };

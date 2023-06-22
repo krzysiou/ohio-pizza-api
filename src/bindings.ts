@@ -5,6 +5,7 @@ import {
   addReservation,
   deletePizza,
   deleteReservation,
+  getReservation,
   getPizzas,
   loginEmployee,
   registerEmployee,
@@ -53,6 +54,12 @@ const bindings: Binding[] = [
     method: 'POST',
     path: '/admin/delete-reservation',
     callback: deleteReservation,
+    middleware: [jsonParser, verifyJsonWebToken],
+  },
+  {
+    method: 'POST',
+    path: '/admin/reservation',
+    callback: getReservation,
     middleware: [jsonParser, verifyJsonWebToken],
   },
 ];
