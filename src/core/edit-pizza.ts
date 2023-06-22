@@ -8,7 +8,6 @@ const addPizza = async (req: Request, res: Response) => {
     res.status(400).send({ message: 'Missing required fields' });
     return;
   }
-  console.log(name, price, ingredients, image);
 
   const pizzaId = (
     await PostgresClient.query(

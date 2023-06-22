@@ -2,7 +2,9 @@ import bodyParser from 'body-parser';
 import type { Binding } from './types';
 import {
   addPizza,
+  addReservation,
   deletePizza,
+  deleteReservation,
   getPizzas,
   loginEmployee,
   registerEmployee,
@@ -39,6 +41,18 @@ const bindings: Binding[] = [
     method: 'POST',
     path: '/admin/delete-pizza',
     callback: deletePizza,
+    middleware: [jsonParser, verifyJsonWebToken],
+  },
+  {
+    method: 'POST',
+    path: '/admin/add-reservation',
+    callback: addReservation,
+    middleware: [jsonParser, verifyJsonWebToken],
+  },
+  {
+    method: 'POST',
+    path: '/admin/delete-reservation',
+    callback: deleteReservation,
     middleware: [jsonParser, verifyJsonWebToken],
   },
 ];
