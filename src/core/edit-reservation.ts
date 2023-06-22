@@ -16,6 +16,14 @@ const addReservation = async (req: Request, res: Response) => {
     return;
   }
 
+  const reservationsInfo = await PostgresClient.query(`INSERT INTO reservation(reservation_date, tel, surname) VALUES ('${date}', ${tel}, '${surname}') RETURNING pizza_id`);
+  const reservationsNumber = reservationsInfo.rows.length;
+
+  if (reservationsNumber > 12) {
+    res.status(400).send({ message: 'There are no available spots' });
+    return;
+  }
+
   await PostgresClient.query(`INSERT INTO reservation(reservation_date, tel, surname) VALUES ('${date}', ${tel}, '${surname}') RETURNING pizza_id`);
 
   res.status(200).send({ message: 'Reservation added successfully' });
