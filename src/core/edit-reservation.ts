@@ -4,19 +4,19 @@ import { PostgresClient } from '../db';
 interface Reservation {
   reservation_id: number;
   reservation_date: string;
-  tel: string;
-  surname: string;
+  phone_number: string;
+  lastname: string;
 }
 
 const addReservation = async (req: Request, res: Response) => {
-  const { date, tel, surname } = req.body;
+  const { reservation_date, phone_number, lastname } = req.body;
 
-  if (date === undefined || tel === undefined || surname === undefined) {
+  if (reservation_date === undefined || phone_number === undefined || lastname === undefined) {
     res.status(400).send({ message: 'Missing required fields' });
     return;
   }
 
-  const reservationsInfo = await PostgresClient.query(`INSERT INTO reservation(reservation_date, tel, surname) VALUES ('${date}', ${tel}, '${surname}') RETURNING pizza_id`);
+  const reservationsInfo = await PostgresClient.query<Reservation>('SELECT * FROM get_reservation()');
   const reservationsNumber = reservationsInfo.rows.length;
 
   if (reservationsNumber > 12) {
@@ -24,7 +24,7 @@ const addReservation = async (req: Request, res: Response) => {
     return;
   }
 
-  await PostgresClient.query(`INSERT INTO reservation(reservation_date, tel, surname) VALUES ('${date}', ${tel}, '${surname}') RETURNING pizza_id`);
+  await PostgresClient.query(`INSERT INTO reservation(reservation_date, phone_number, lastname) VALUES ('${reservation_date}', ${phone_number}, '${lastname}')`);
 
   res.status(200).send({ message: 'Reservation added successfully' });
 };
