@@ -18,9 +18,9 @@ const addReservation = async (req: Request, res: Response) => {
 
   const reservationsInfo = await PostgresClient.query<Reservation>('SELECT * FROM get_reservation()');
   const reservationsNumber = reservationsInfo.rows.length;
-
+  
   if (reservationsNumber > 12) {
-    res.status(400).send({ message: 'There are no available spots' });
+    res.status(200).send({ message: 'There are no available spots' });
     return;
   }
 
