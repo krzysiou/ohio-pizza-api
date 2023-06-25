@@ -19,16 +19,17 @@ const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
       ingredient_name: string;
     }>('select * from get_all_pizzas()'),
   ]);
-  
+
   const pizzas: Pizza[] = pizzasInfo.rows.map((pizza) => {
     return {
       ...pizza,
+      price: Number(pizza.price),
       ingredients: pizzasIngredients.rows
         .filter((p) => p.pizza_name === pizza.name)
         .map((p) => p.ingredient_name),
     };
   });
-  
+
   return res.json(pizzas).status(200);
 };
 
@@ -96,4 +97,3 @@ const deletePizza = async (req: Request, res: Response) => {
 };
 
 export { addPizza, deletePizza, getPizzas };
-
