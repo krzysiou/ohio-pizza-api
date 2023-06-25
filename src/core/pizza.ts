@@ -23,12 +23,13 @@ const getPizzas = async (_req: Request, res: Response<Pizza[]>) => {
   const pizzas: Pizza[] = pizzasInfo.rows.map((pizza) => {
     return {
       ...pizza,
+      price: Number(pizza.price),
       ingredients: pizzasIngredients.rows
         .filter((p) => p.pizza_name === pizza.name)
         .map((p) => p.ingredient_name),
     };
   });
-  
+
   return res.json(pizzas).status(200);
 };
 
