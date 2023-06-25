@@ -7,7 +7,8 @@
     "build": "npx tsc",
     "dev": "nodemon ./src/index.ts",
     "prod": "npx tsc && nodemon ./build/index.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "npx jest --watchAll"
   },
   "repository": {
     "type": "git",
